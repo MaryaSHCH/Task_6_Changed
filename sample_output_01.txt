@@ -1,0 +1,80 @@
+Command ('loc', 'zip', 'dist', 'end') => loc
+loc
+Enter a ZIP Code to lookup => 12180
+12180
+ZIP Code 12180 is in Troy, NY, Rensselaer county,
+coordinates: (042°40'25.32"N,073°36'31.65"W)
+
+Command ('loc', 'zip', 'dist', 'end') => loc
+loc
+Enter a ZIP Code to lookup => 1946
+1946
+Invalid or unknown ZIP Code
+
+Command ('loc', 'zip', 'dist', 'end') => loc
+loc
+Enter a ZIP Code to lookup => 19465
+19465
+ZIP Code 19465 is in Pottstown, PA, Chester county,
+coordinates: (040°11'30.87"N,075°39'55.12"W)
+
+Command ('loc', 'zip', 'dist', 'end') => loc
+loc
+Enter a ZIP Code to lookup => 00000
+00000
+Invalid or unknown ZIP Code
+
+Command ('loc', 'zip', 'dist', 'end') => loc
+loc
+Enter a ZIP Code to lookup => cairns
+cairns
+Invalid or unknown ZIP Code
+
+Command ('loc', 'zip', 'dist', 'end') => dist
+dist
+Enter the first ZIP Code => 19465
+19465
+Enter the second ZIP Code => 12180
+12180
+The distance between 19465 and 12180 is 201.88 miles
+
+Command ('loc', 'zip', 'dist', 'end') => dist
+dist
+Enter the first ZIP Code => 12180
+12180
+Enter the second ZIP Code => 12180
+12180
+The distance between 12180 and 12180 is 0.00 miles
+
+Command ('loc', 'zip', 'dist', 'end') => dist
+dist
+Enter the first ZIP Code => 12180
+12180
+Enter the second ZIP Code => 55499
+55499
+The distance between 12180 and 55499 cannot be determined
+
+Command ('loc', 'zip', 'dist', 'end') => zip
+zip
+Enter a city name to lookup => troY
+troY
+Enter the state name to lookup => ny
+ny
+The following ZIP Code(s) found for Troy, NY: 12179, 12180, 12181, 12182, 12183
+
+Command ('loc', 'zip', 'dist', 'end') => zip
+zip
+Enter a city name to lookup => Amsterdam
+Amsterdam
+Enter the state name to lookup => NL
+NL
+No ZIP Code found for Amsterdam, NL
+
+Command ('loc', 'zip', 'dist', 'end') => help
+help
+Invalid command, ignoring
+
+Command ('loc', 'zip', 'dist', 'end') => END
+END
+
+Done
