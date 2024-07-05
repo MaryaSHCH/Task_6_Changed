@@ -1,6 +1,18 @@
 import csv
 from math import radians, cos, sin, asin, sqrt
 
+def dms_to_dd(d, m, s):
+    '''Преобразует координаты из градусов, минут и секунд в десятичные градусы.'''
+    return d + m/60 + s/3600
+
+def dd_to_dms(dd):
+    '''Преобразует координаты из десятичных градусов в градусы, минуты и секунды.'''
+    d = int(dd)
+    minfloat = abs(dd - d) * 60
+    m = int(minfloat)
+    s = (minfloat - m) * 60
+    return (d, m, s)
+
 def haversine(lon1, lat1, lon2, lat2):
     '''Основываясь на формуле гаверсинуса функция вычисляет расстояние
     между двумя точками на земной поверхности, заданными их широтой и долготой.
@@ -15,7 +27,8 @@ def haversine(lon1, lat1, lon2, lat2):
     dlat = lat2 - lat1
     a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
     c = 2 * asin(sqrt(a))
-    r = 6371  # радиус Земли в километрах
+    #r = 6371  # радиус Земли в километрах
+    r = 3959 # радиус Земли в милях
     return c * r # расстояние между двумя точками в километрах
 
 def load_zipcode_database():
@@ -53,7 +66,9 @@ def find_location_by_zip(zipcode):
 def find_location_by_zip(zipcode):
     if zipcode in zipcode_database:
         location_data = zipcode_database[zipcode]
-        return f"ZIP Code {zipcode} is in {location_data[2]}, {location_data[3]}, {location_data[4]} county, coordinates: ({location_data[0]}°N,{location_data[1]}°W)."
+        lat_dms = dd_to_dms(float(location_data[0]))
+        lon_dms = dd_to_dms(float(location_data[1]))
+        return f"ZIP Code {zipcode} is in {location_data[2]}, {location_data[3]}, {location_data[4]} county, coordinates: ({lat_dms[0]}°{lat_dms[1]}'{lat_dms[2]}\"N, {lon_dms[0]}°{lon_dms[1]}'{lon_dms[2]}\"W)."
     else:
         return "Zipcode not found."
 
@@ -70,7 +85,8 @@ def find_zip_by_city_and_state(city, state, zipcode_database):
             zipcodes.append(zipcode)
     return zipcodes if zipcodes else "City or state not found."
 
-def calculate_distance_by_zip(zipcode1, zipcode2, unit='km'):
+def calculate_distance_by_zip(zipcode1, zipcode2):
+    #:unit='km')
     ''' Функция определяет расстояние между двумя точками, заданными их почтовыми индексами.
     :param zipcode1 (str): Почтовый индекс первой точки.
     :param zipcode2 (str): Почтовый индекс второй точки.
@@ -81,9 +97,12 @@ def calculate_distance_by_zip(zipcode1, zipcode2, unit='km'):
         lat1, lon1 = map(float, zipcode_database[zipcode1][:2])
         lat2, lon2 = map(float, zipcode_database[zipcode2][:2])
         distance = haversine(lon1, lat1, lon2, lat2)
-        if unit == 'miles':
-            return distance * 0.621371  # Перевод в мили
-        return distance  # в км
+        # if unit == 'miles':
+        #     distance_miles = distance * 0.621371
+        #     return round(distance_miles, 2)
+        formatted_distance = format(distance, '.2f')  # Округление до двух знаков после запятой
+        return formatted_distance
+        # return round (distance, 2)
     else:
         return f"The distance between {zipcode1} and {zipcode2} cannot be determined."
 
@@ -114,19 +133,12 @@ def main():
         elif command == 'dist':
             zipcode1 = input("Enter the first ZIP Code: ")
             zipcode2 = input("Enter the second ZIP Code: ")
-            unit = input("Choose the unit of measurement (km/miles): ")
-            print(f"Distance between {zipcode1} and {zipcode2}: {calculate_distance_by_zip(zipcode1, zipcode2, unit)}")
+            # unit = input("Choose the unit of measurement (km/miles): ")
+            print(f"Distance between {zipcode1} and {zipcode2}: {calculate_distance_by_zip(zipcode1, zipcode2)} miles")
     else:
             print(f"Invalid command, ignoring. ")
 
 if __name__ == "__main__":
     main()
 
-import zip_util
-
-zip_codes = zip_util.read_zip_all()
-print(zip_codes[0])
-print(zip_codes[4108])
-
-# Test test
 
